@@ -9,10 +9,16 @@ pipeline{
          stage('Input') {
             steps {
                 script {
-                    timeout(time: 20, unit: 'SECONDS') {
+                    try{
+                        timeout(time: 20, unit: 'SECONDS') {
                         env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
                             parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy', description: 'How you want to deploy?')]
                     }
+                    } catch(err)
+                    {
+                        echo "${err}"
+                    }
+                    
                     
                 echo "${env.RELEASE_SCOPE}"
                 if (env.RELEASE_SCOPE == 'Php_deploy') {
