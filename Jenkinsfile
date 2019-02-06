@@ -16,8 +16,14 @@ pipeline{
                     }
                     } catch(err)
                     {
-                        def user = err.getCauses()
-                        echo "${user}"
+                        def user = err.getCauses()[0].getUser()
+
+      if (user.toString == 'SYSTEM') {  // if it's system it's a timeout
+        didTimeout = true
+        echo "Build timed out at approval step"
+      } else if (userInput == false) {  // if not and input is false it's the user
+        echo "Build aborted by: [${user}]"
+      }
                         
                     } 
                 echo "${env.RELEASE_SCOPE}"
