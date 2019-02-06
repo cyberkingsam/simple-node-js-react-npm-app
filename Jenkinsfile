@@ -8,14 +8,18 @@ pipeline{
     stages{
          stage('Input') {
             steps {
-                input('Do you want to proceed?')
+                script {
+                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                }
+                echo "${env.RELEASE_SCOPE}"
             }
          }
-         stage('If Proceed is clicked') {
-            steps {
-                print('hello')
-            }
-        }
+        //  stage('If Proceed is clicked') {
+        //     steps {
+        //         print('hello')
+        //     }
+        // }
         stage('Build'){
             steps {
                 echo 'checking'
