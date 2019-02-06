@@ -17,9 +17,7 @@ pipeline{
                 echo 'sameer saxena'
                 sh 'printenv'
                 sh 'echo $GIT_COMMIT >> test.log'
-            }
-        }
-        script{
+                script{
             stage('Example') {
 
         if (env.BRANCH_NAME == 'master') {
@@ -30,6 +28,8 @@ pipeline{
         }
         
     }
+            }
+        }
         stage('production')
         {
             steps {
