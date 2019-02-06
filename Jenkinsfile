@@ -17,6 +17,12 @@ pipeline{
                 echo 'sameer saxena'
             }
         }
+        stage('production')
+        {
+            steps {
+                echo 'Production'
+            }
+        }
 
     }
 }
