@@ -15,7 +15,9 @@ pipeline{
         {
             steps {
                 echo 'sameer saxena'
-                 sh 'printenv'
+                echo $NODE_NAME
+                echo $GIT_BRANCH
+                echo $GIT_URL
             }
         }
         stage('production')
