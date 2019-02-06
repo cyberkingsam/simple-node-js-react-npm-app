@@ -11,6 +11,12 @@ pipeline{
                 sh 'npm install'
             }
         }
+        stage('Deploy')
+        {
+            steps {
+                echo 'sameer saxena'
+            }
+        }
 
     }
 }
