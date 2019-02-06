@@ -17,7 +17,7 @@ pipeline{
                     } catch(FlowInterruptedException)
                     {
                         def user = FlowInterruptedException.getCauses()[0].getUser()
-                        echo '${user}'
+                        echo "${user}"
 
     //   if (user.toString == 'SYSTEM') {  // if it's system it's a timeout
     //     didTimeout = true
