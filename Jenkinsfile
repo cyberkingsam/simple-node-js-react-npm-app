@@ -16,10 +16,8 @@ pipeline{
                     }
                     } catch(err)
                     {
-                        echo "${err}"
-                    }
-                    
-                    
+                        echo "${err.getCauses()}"
+                    } 
                 echo "${env.RELEASE_SCOPE}"
                 if (env.RELEASE_SCOPE == 'Php_deploy') {
                     echo 'will do a php deploy and will take time'
