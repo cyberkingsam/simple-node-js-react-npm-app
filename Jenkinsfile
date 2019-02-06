@@ -15,6 +15,7 @@ pipeline{
         {
             steps {
                 echo 'sameer saxena'
+                 sh 'printenv'
             }
         }
         stage('production')
