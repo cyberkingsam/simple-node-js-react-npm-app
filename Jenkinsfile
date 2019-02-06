@@ -6,6 +6,15 @@ pipeline{
         }
     }
     stages{
+         stage('Input') {
+            steps {
+                input('Do you want to proceed?')
+            }
+         stage('If Proceed is clicked') {
+            steps {
+                print('hello')
+            }
+        }
         stage('Build'){
             steps {
                 echo 'checking'
@@ -18,17 +27,6 @@ pipeline{
                 sh 'printenv'
                 sh 'echo $GIT_COMMIT >> test.log'
                 script{
-                    def userInput
-                    try {
-                            userInput = input(
-                            id: 'Proceed1', message: 'Was this successful?', parameters: [
-                            [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
-                            ])
-                        } catch(err) { // input false
-                def user = err.getCauses()[0].getUser()
-                userInput = false
-                echo "Aborted by: [${user}]"
-            }
             stage('Example') {
 
         if (env.NODE_NAME == 'master') {
