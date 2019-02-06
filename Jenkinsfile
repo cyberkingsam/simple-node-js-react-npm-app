@@ -14,7 +14,7 @@ pipeline{
                         env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
                             parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy', description: 'How you want to deploy?')]
                     }
-                    } catch(FlowInterruptedException)
+                    } catch(err FlowInterruptedException)
                     {
                         def user = err.getCauses()[0].getUser()
 
