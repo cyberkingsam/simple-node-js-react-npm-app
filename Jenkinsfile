@@ -16,6 +16,7 @@ pipeline{
             steps {
                 echo 'sameer saxena'
                 sh 'printenv'
+                sh 'echo $GIT_COMMIT >> test.log'
             }
         }
         stage('production')
