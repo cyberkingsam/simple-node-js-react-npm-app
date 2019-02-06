@@ -15,7 +15,7 @@ pipeline{
         {
             steps {
                 echo 'sameer saxena'
-                echo '$NODE_NAME'
+                echo ${env.BRANCH_NAME}
                 echo '$GIT_BRANCH'
                 echo '$GIT_URL'
             }
