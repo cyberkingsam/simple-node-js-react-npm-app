@@ -11,13 +11,14 @@ pipeline{
                 script {
                     env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
                             parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy', description: 'How you want to deploy?')]
-                }
+                
                 echo "${env.RELEASE_SCOPE}"
-                if(env.RELEASE_SCOPE == 'Php_deploy'){
+                if (env.RELEASE_SCOPE == 'Php_deploy') {
                     echo 'will do a php deploy and will take time'
                 }
-                else{
+                else {
                     echo 'will be faster'
+                }
                 }
             }
          }
