@@ -17,13 +17,14 @@ pipeline{
                     } catch(FlowInterruptedException)
                     {
                         def user = FlowInterruptedException.getCauses()[0].getUser()
+                        echo '${user}'
 
-      if (user.toString == 'SYSTEM') {  // if it's system it's a timeout
-        didTimeout = true
-        echo "Build timed out at approval step"
-      } else if (userInput == false) {  // if not and input is false it's the user
-        echo "Build aborted by: [${user}]"
-      }
+    //   if (user.toString == 'SYSTEM') {  // if it's system it's a timeout
+    //     didTimeout = true
+    //     echo "Build timed out at approval step"
+    //   } else if (userInput == false) {  // if not and input is false it's the user
+    //     echo "Build aborted by: [${user}]"
+    //   }
                         
                     } 
                 echo "${env.RELEASE_SCOPE}"
