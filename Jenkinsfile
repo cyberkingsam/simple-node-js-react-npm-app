@@ -10,9 +10,15 @@ pipeline{
             steps {
                 script {
                     env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
-                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                            parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy', description: 'How you want to deploy?')]
                 }
                 echo "${env.RELEASE_SCOPE}"
+                if(env.RELEASE_SCOPE == 'Php_deploy'){
+                    echo 'will do a php deploy and will take time'
+                }
+                else{
+                    echo 'will be faster'
+                }
             }
          }
         //  stage('If Proceed is clicked') {
