@@ -15,15 +15,13 @@ pipeline{
         {
             steps {
                 echo 'sameer saxena'
-                echo ${env.BRANCH_NAME}
-                echo '$GIT_BRANCH'
-                echo '$GIT_URL'
+                sh 'printenv'
             }
         }
         stage('production')
         {
             steps {
-                echo 'Production'
+                echo 'working'
             }
         }
 
