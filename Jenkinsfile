@@ -56,6 +56,7 @@ pipeline{
         if (env.BRANCH_NAME == 'aa101') {
             echo "${path}"
             sh "cd ${path}aa101/ && echo test >> test.log"
+            sh "curl 'https://oapi.dingtalk.com/robot/send?access_token=e30bce18c67b9fa0a663a9925afa3e490c16e5aaee068a69b0d14b1ffe0ee98a' -H 'Content-Type:application/json' -d '{"msgtype": "text", "text": {"content": "${path}aa101"}}' "
         } else {
             echo 'I execute elsewhere'
         }
