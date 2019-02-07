@@ -14,8 +14,8 @@ pipeline{
                             }
                         } catch(FlowInterruptedException)
                         {
-                            user = FlowInterruptedException.getCauses()[0].getUser()
-                            echo "${user}"
+                            def user1 = FlowInterruptedException.getCauses()[0].getUser()
+                            echo "${user1}"
                         }
                 }
             }
