@@ -27,7 +27,7 @@ pipeline{
                     if ("${env.jenuser}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
-                    else if("${env.jenuser}" == null)
+                    else if("${env.jenuser}" == 'null')
                     {
                         echo "user's input"
                     }
