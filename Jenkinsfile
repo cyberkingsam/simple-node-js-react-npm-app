@@ -28,6 +28,8 @@ pipeline{
                         echo "SYSTEM Timeout"
                     } 
                     else {  // if not and input is false it's the user
+                        currentBuild.result = 'ABORTED'
+                        error('Stopping early…')
                         echo "Build aborted by: [${env.jenuser}]"
                     }
                 }
