@@ -23,7 +23,7 @@ pipeline{
         stage('Validating'){
             steps{
                 script{
-                    if (user.toString == 'SYSTEM') {  // if it's system it's a timeout
+                    if ("${user}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
                     else if (userInput == false) {  // if not and input is false it's the user
