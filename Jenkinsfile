@@ -1,3 +1,5 @@
+def path = '/home/foodie/staging/'
+
 pipeline{
     agent{
         docker{
@@ -56,8 +58,8 @@ pipeline{
                 script{
             stage('Example') {
 
-        if (env.NODE_NAME == 'master') {
-            echo 'I only execute on the master branch'
+        if (env.NODE_NAME == 'aa101') {
+            sh 'cd $path/aa101/ && echo test >> test.log'
         } else {
             echo 'I execute elsewhere'
         }
