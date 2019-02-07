@@ -53,9 +53,22 @@ pipeline{
                 script{
             stage('Example') {
 
-        if (env.GIT_BRANCH == 'origin/aa101') {
+        if (env.BRANCH_NAME == 'aa101') {
             echo "${path}"
             sh "cd ${path}aa101/ && echo test >> test.log"
+        } else {
+            echo 'I execute elsewhere'
+        }
+
+        if (env.BRANCH_NAME == 'aa102') {
+            echo "${path}"
+            sh "cd ${path}aa102/ && echo test >> test.log"
+        } else {
+            echo 'I execute elsewhere'
+        }
+
+        if (env.BRANCH_NAME == 'master') {
+            echo "master branch do nothing"
         } else {
             echo 'I execute elsewhere'
         }
