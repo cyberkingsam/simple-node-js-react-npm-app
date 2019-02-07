@@ -1,5 +1,5 @@
 def StagingPath = '/home/foodie/staging/'
-def user
+def user = ''
 pipeline{
     agent any
     stages{
@@ -23,6 +23,7 @@ pipeline{
         }
         stage('Validating'){
             steps{
+                echo "${user}"
                 script{
                     if ("${user}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
