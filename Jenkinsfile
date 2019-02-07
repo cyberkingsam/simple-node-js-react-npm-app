@@ -1,4 +1,5 @@
 def StagingPath = '/home/foodie/staging/'
+def user
 pipeline{
     agent any
     stages{
@@ -13,7 +14,7 @@ pipeline{
                             }
                         } catch(FlowInterruptedException)
                         {
-                            def user = FlowInterruptedException.getCauses()[0].getUser()
+                            user = FlowInterruptedException.getCauses()[0].getUser()
                             echo "${user}"
                         }
                 }
