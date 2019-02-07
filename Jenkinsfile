@@ -3,9 +3,6 @@ def user = 'i'
 pipeline{
     agent any
     stages{
-        script{
-            def user1='initial'
-        }
         stage('Input')
         {
             steps {
@@ -51,6 +48,17 @@ pipeline{
                 }
                 
             }
+        }
+    }
+    post {
+        always {
+            sh "curl \'https://oapi.dingtalk.com/robot/send?access_token=e30bce18c67b9fa0a663a9925afa3e490c16e5aaee068a69b0d14b1ffe0ee98a\' -H \'Content-Type:application/json\' -d \'{\"msgtype\": \"text\", \"text\": {\"content\": \"${StagingPath}aa102\"}}\'"
+        }
+        failure {
+            sh "curl \'https://oapi.dingtalk.com/robot/send?access_token=e30bce18c67b9fa0a663a9925afa3e490c16e5aaee068a69b0d14b1ffe0ee98a\' -H \'Content-Type:application/json\' -d \'{\"msgtype\": \"text\", \"text\": {\"content\": \"Build Fail\"}}\'"
+        }
+        success{
+             sh "curl \'https://oapi.dingtalk.com/robot/send?access_token=e30bce18c67b9fa0a663a9925afa3e490c16e5aaee068a69b0d14b1ffe0ee98a\' -H \'Content-Type:application/json\' -d \'{\"msgtype\": \"text\", \"text\": {\"content\": \"Build Success\"}}\'"
         }
     }
 }
