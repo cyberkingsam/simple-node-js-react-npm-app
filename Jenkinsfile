@@ -26,7 +26,7 @@ pipeline{
                     if ("${user}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
-                    else if (userInput == false) {  // if not and input is false it's the user
+                    else {  // if not and input is false it's the user
                         echo "Build aborted by: [${user}]"
                     }
                 }
