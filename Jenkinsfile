@@ -60,7 +60,7 @@ pipeline{
 
         if (env.GIT_BRANCH == 'origin/aa101') {
             echo "${path}"
-            sh 'cd ' +${path}+'/aa101/ && echo test >> test.log'
+            sh "cd ${path}/aa101/ && echo test >> test.log"
         } else {
             echo 'I execute elsewhere'
         }
