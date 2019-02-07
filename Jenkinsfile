@@ -3,18 +3,21 @@ def user = 'i'
 pipeline{
     agent any
     stages{
+        script{
+            def user1='initial'
+        }
         stage('Input')
         {
             steps {
                 script{
                      try{
                             timeout(time: 20, unit: 'SECONDS') {
-                                env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                                env.RELEASE_SCOPE = input message: 'User input required', ok: 'Deploy!',
                                 parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy', description: 'How you want to deploy?')]
                             }
                         } catch(FlowInterruptedException)
                         {
-                            def user1 = FlowInterruptedException.getCauses()[0].getUser()
+                            user1 = FlowInterruptedException.getCauses()[0].getUser()
                             echo "${user1}"
                         }
                 }
@@ -23,13 +26,13 @@ pipeline{
         }
         stage('Validating'){
             steps{
-                echo "${user}"
+                echo "${user1}"
                 script{
-                    if ("${user}" == 'SYSTEM') {  // if it's system it's a timeout
+                    if ("${user1}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
                     else {  // if not and input is false it's the user
-                        echo "Build aborted by: [${user}]"
+                        echo "Build aborted by: [${user1}]"
                     }
                 }
             }
