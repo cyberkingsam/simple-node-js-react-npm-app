@@ -27,7 +27,7 @@ pipeline{
                     if ("${env.jenuser}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
-                    else {  // if not and input is false it's the user
+                    else {  
                         currentBuild.result = 'ABORTED'
                         error('Stopping early…')
                         echo "Build aborted by: [${env.jenuser}]"
@@ -36,20 +36,22 @@ pipeline{
             }
 
         }
-        
         stage('ZStagingDeploy'){
             steps{
                 script{
-                    if (env.RELEASE_SCOPE == 'Php_deploy') {
-                        echo 'will do a php deploy and will take time'
+                    if (env.BRANCH_NAME == 'master') {
+                        echo "do nothing"
                     }
-                else {
-                    echo 'will be faster'
-                }
-                }
-                
+                    else{
+                            if (env.RELEASE_SCOPE == 'Php_deploy') {
+                               sh "cd ${StagingPath}${env.BRANCH_NAME}/Oven && ./Oven --no-color staging_php_deploy | tee -a ${StagingPath}${env.BRANCH_NAME}/hipchat.log"
+                            }
+                        else {
+                                sh "cd ${StagingPath}${env.BRANCH_NAME}/Oven && ./Oven --no-color no_pull_fast_deploy | tee -a ${StagingPath}${env.BRANCH_NAME}/hipchat.log"
+                            }
+                    }
+                }  
             }
         }
     }
-    
 }
