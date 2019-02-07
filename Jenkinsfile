@@ -58,7 +58,7 @@ pipeline{
                 script{
             stage('Example') {
 
-        if (env.NODE_NAME == 'aa101') {
+        if (env.NODE_NAME == 'origin/aa101') {
             sh 'cd $path/aa101/ && echo test >> test.log'
         } else {
             echo 'I execute elsewhere'
