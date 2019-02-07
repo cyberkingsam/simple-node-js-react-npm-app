@@ -1,5 +1,5 @@
 def StagingPath = '/home/foodie/staging/'
-def user = 'i'
+def user
 pipeline{
     agent any
     stages{
