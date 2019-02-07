@@ -9,7 +9,7 @@ pipeline{
                      try{
                             timeout(time: 20, unit: 'SECONDS') {
                                 env.RELEASE_SCOPE = input message: 'User input required', ok: 'Deploy!',
-                                parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy', description: 'How you want to deploy?')]
+                                parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy\nmarinate_fast_deploy\nmarinate_php_deploy', description: 'How you want to deploy?')]
                             }
                         } catch(FlowInterruptedException)
                         {
@@ -44,10 +44,20 @@ pipeline{
                     }
                     else{
                             if (env.RELEASE_SCOPE == 'Php_deploy') {
-                               sh "cd ${StagingPath}${env.BRANCH_NAME}/Oven && ./Oven --no-color staging_php_deploy | tee -a ${StagingPath}${env.BRANCH_NAME}/hipchat.log"
+                                echo "Php_deploy"
+                               //sh "cd ${StagingPath}${env.BRANCH_NAME}/Oven && ./Oven --no-color staging_php_deploy | tee -a ${StagingPath}${env.BRANCH_NAME}/hipchat.log"
                             }
-                        else {
-                                sh "cd ${StagingPath}${env.BRANCH_NAME}/Oven && ./Oven --no-color no_pull_fast_deploy | tee -a ${StagingPath}${env.BRANCH_NAME}/hipchat.log"
+                            else if(env.RELEASE_SCOPE == 'marinate_fast_deploy'){
+                                echo "marinate fast deploy"
+                               // sh "cd /home/foodie/staging/#{staging_name}/Oven && ./Oven --no-color no_pull_fast_deploy_with_marinate | tee -a /home/foodie/staging/#{staging_name}/hipchat.log"
+                            }
+                            else if(env.RELEASE_SCOPE == 'marinate_php_deploy'){
+                                echo "marinate_php_deploy"
+                                //sh "cd /home/foodie/staging/#{staging_name}/Oven && ./Oven --no-color staging_php_deploy_with_marinate | tee -a /home/foodie/staging/#{staging_name}/hipchat.log"
+                            }
+                            else {
+                                echo "fast php deploy"
+                                //sh "cd ${StagingPath}${env.BRANCH_NAME}/Oven && ./Oven --no-color no_pull_fast_deploy | tee -a ${StagingPath}${env.BRANCH_NAME}/hipchat.log"
                             }
                     }
                 }  
