@@ -1,5 +1,4 @@
 def StagingPath = '/home/foodie/staging/'
-def user
 pipeline{
     agent any
     stages{
@@ -14,8 +13,8 @@ pipeline{
                             }
                         } catch(FlowInterruptedException)
                         {
-                            user = FlowInterruptedException.getCauses()[0].getUser()
-                            echo "${user}"
+                             env.jenuser = FlowInterruptedException.getCauses()[0].getUser()
+                            echo "${env.jenuser}"
                         }
                 }
             }
@@ -23,13 +22,13 @@ pipeline{
         }
         stage('Validating'){
             steps{
-                echo "${user}"
+                echo "${env.jenuser}"
                 script{
-                    if ("${user}" == 'SYSTEM') {  // if it's system it's a timeout
+                    if ("${env.jenuser}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
                     else {  // if not and input is false it's the user
-                        echo "Build aborted by: [${user}]"
+                        echo "Build aborted by: [${env.jenuser}]"
                     }
                 }
             }
