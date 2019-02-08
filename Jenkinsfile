@@ -8,7 +8,7 @@ pipeline{
             steps {
                 script{
                      try{
-                            timeout(time: 20, unit: 'SECONDS') {
+                        timeout(time: 20, unit: 'SECONDS') {
                                 env.RELEASE_SCOPE = input message: 'User input required', ok: 'Deploy!',
                                 parameters: [choice(name: 'Deploy Options', choices: 'Php_deploy\nFast_deploy\nmarinate_fast_deploy\nmarinate_php_deploy', description: 'How you want to deploy?')]
                             }
@@ -25,6 +25,8 @@ pipeline{
             steps{
                 echo "${env.jenuser}"
                 script{
+                    env.INTANCE_LABLE = "sng-${env.BRANCH_NAME}-stg"
+                    echo "${env.INTANCE_LABLE}"
                     if ("${env.jenuser}" == 'SYSTEM') {  // if it's system it's a timeout
                         echo "SYSTEM Timeout"
                     } 
@@ -37,16 +39,23 @@ pipeline{
                         error('Stopping early…')
                         echo "Build aborted by: [${env.jenuser}]"
                     }
-                    sh "echo stopped > state"
-                    //sh "aws  ec2 describe-instances --filter "Name=tag:service,Values=staging-web" "Name=tag:Name,Values=sng-aa114-stg" --query "Reservations[*].Instances[*].[State.Name]" --output text > state"
+                    //sh "echo stopped > state"
+                    sh "aws  ec2 describe-instances --filter \"Name=tag:service,Values=staging-web\" \"Name=tag:Name,Values=sng-aa114-stg\" --query \"Reservations[*].Instances[*].[State.Name]\" --output text > state"
+                    sh "aws  ec2 describe-instances --filter \"Name=tag:service,Values=staging-web\" \"Name=tag:Name,Values=sng-aa114-stg\" --query \"Reservations[*].Instances[*].[InstanceId]\" --output text > instanceid"
                     def output=readFile('state').trim()
+                    def instanceid = readFile('instanceid').trim()
+                    echo "${instanceid}"
                     echo "output=$output";
                     if("${output}"== 'stopped')
                     {   
                         sh "echo starting > res"
+                        sh "aws ec2 start-instances --instance-ids ${instanceid}"
                         def time = 20
                         echo "Waiting ${time} seconds for deployment to complete prior starting smoke testing"
                         sleep time.toInteger()
+                    }
+                    else{
+                        echo "already running"
                     }
                 }
             }
