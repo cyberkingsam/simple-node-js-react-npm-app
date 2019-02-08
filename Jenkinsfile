@@ -37,6 +37,17 @@ pipeline{
                         error('Stopping early…')
                         echo "Build aborted by: [${env.jenuser}]"
                     }
+                    sh "echo stopped > state"
+                    //sh "aws  ec2 describe-instances --filter "Name=tag:service,Values=staging-web" "Name=tag:Name,Values=sng-aa114-stg" --query "Reservations[*].Instances[*].[State.Name]" --output text > state"
+                    def output=readFile('state').trim()
+                    echo "output=$output";
+                    if($output == 'stopped')
+                    {   
+                        sh "echo starting > res"
+                        def time = 20
+                        echo "Waiting ${time} seconds for deployment to complete prior starting smoke testing"
+                        sleep time.toInteger()
+                    }
                 }
             }
 
