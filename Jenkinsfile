@@ -40,8 +40,8 @@ pipeline{
                         echo "Build aborted by: [${env.jenuser}]"
                     }
                     //sh "echo stopped > state"
-                    sh "aws  ec2 describe-instances --filter \"Name=tag:service,Values=staging-web\" \"Name=tag:Name,Values=sng-aa114-stg\" --query \"Reservations[*].Instances[*].[State.Name]\" --region ap-southeast-1 --output text > state"
-                    sh "aws  ec2 describe-instances --filter \"Name=tag:service,Values=staging-web\" \"Name=tag:Name,Values=sng-aa114-stg\" --query \"Reservations[*].Instances[*].[InstanceId]\" --region ap-southeast-1 --output text > instanceid"
+                    sh "aws  ec2 describe-instances --filter \"Name=tag:service,Values=staging-web\" \"Name=tag:Name,Values=${env.INTANCE_LABLE}\" --query \"Reservations[*].Instances[*].[State.Name]\" --region ap-southeast-1 --output text > state"
+                    sh "aws  ec2 describe-instances --filter \"Name=tag:service,Values=staging-web\" \"Name=tag:Name,Values=${env.INTANCE_LABLE}\" --query \"Reservations[*].Instances[*].[InstanceId]\" --region ap-southeast-1 --output text > instanceid"
                     def output=readFile('state').trim()
                     def instanceid = readFile('instanceid').trim()
                     echo "${instanceid}"
