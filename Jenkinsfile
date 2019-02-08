@@ -42,11 +42,11 @@ pipeline{
 
         }
         stage('ZStagingDeploy'){
-            o2_menu_workers.each { item ->
-                            echo "Hello ${item}"
-                        }
             steps{
                 script{
+                    o2_menu_workers.each { item ->
+                            echo "Hello ${item}"
+                        }
                     if (env.BRANCH_NAME == 'master') {
                         echo "do nothing"
                     }
