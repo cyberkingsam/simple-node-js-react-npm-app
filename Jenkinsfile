@@ -41,7 +41,7 @@ pipeline{
                     //sh "aws  ec2 describe-instances --filter "Name=tag:service,Values=staging-web" "Name=tag:Name,Values=sng-aa114-stg" --query "Reservations[*].Instances[*].[State.Name]" --output text > state"
                     def output=readFile('state').trim()
                     echo "output=$output";
-                    if($output == 'stopped')
+                    if("${output}"== 'stopped')
                     {   
                         sh "echo starting > res"
                         def time = 20
