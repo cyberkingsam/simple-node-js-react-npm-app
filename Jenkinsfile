@@ -1,4 +1,5 @@
 def StagingPath = '/home/foodie/staging/'
+o2_menu_workers = ["process_pos_menu_update_requests_worker","process_dominos_menu_importer_queue","process_ccd_menu_importer_queue","process_mcd_menu_importer_queue","process_mast_kalandar_menu_importer","process_pizzahut_menu_importer","process_kfc_menu_importer","o2_copy_menu_worker"]
 pipeline{
     agent any
     stages{
@@ -41,6 +42,9 @@ pipeline{
 
         }
         stage('ZStagingDeploy'){
+            o2_menu_workers.each { item ->
+                            echo "Hello ${item}"
+                        }
             steps{
                 script{
                     if (env.BRANCH_NAME == 'master') {
